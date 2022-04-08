@@ -70,7 +70,8 @@ export class WindowBuilder {
     bwcOptions: BrowserWindowConstructorOptions,
     windowViewPath: string,
     showWhenReady: boolean,
-    focusWhenReady: boolean
+    focusWhenReady: boolean,
+    _callback_show?: () => void
   ): BrowserWindow {
     // Create window
     const window = new BrowserWindow(bwcOptions);
@@ -101,6 +102,11 @@ export class WindowBuilder {
       }
       if (focusWhenReady) {
         window.focus();
+      }
+    });
+    window.once("show", () => {
+      if (_callback_show !== undefined) {
+        _callback_show();
       }
     });
     // Return

@@ -1,27 +1,38 @@
 import { RendererProcessIpc } from "electron-better-ipc";
+import { IpcRenderer } from "electron";
 import { IpcRendererNames, IpcRendererParams } from "./Defines";
 
 const ipcRenderer: RendererProcessIpc = eval("require")(
   "electron-better-ipc"
 ).ipcRenderer;
 
-export function callMainWindowCreate(
+const ipcRendererRaw: IpcRenderer = eval("require")("electron").ipcRenderer;
+
+/**
+ * @export
+ * @param {IpcRendererParams.WINDOW_CREATE} data
+ * @return {*}  {Promise<boolean>}
+ */
+export async function callMainWindowCreate(
   data: IpcRendererParams.WINDOW_CREATE
-): void {
-  ipcRenderer.callMain(IpcRendererNames.WINDOW_CREATE, data);
+): Promise<boolean> {
+  return await ipcRenderer.callMain(IpcRendererNames.WINDOW_CREATE, data);
 }
 
 /**
  * Create a text alert window
  * Text cannot too long, query params of URL only support max length for 255(full URL)
+ * Use string pool's uuid
  * @export
  * @param {(string | null)} [text=null]
  * @param {boolean} [byParent=true]
+ * @return {*}  {Promise<boolean>}
  */
-export async function callMainWindowCreateTextAlert(
+export async function callMainCreateTextAlert(
   text: string | null = null,
+  whenShowReplyUuid: string,
   byParent: boolean = true
-): Promise<void> {
+): Promise<boolean> {
   const spParams: IpcRendererParams.IPC_STRING_POOL_APPEND = {
     text: text === null ? "null" : text,
   };
@@ -29,7 +40,7 @@ export async function callMainWindowCreateTextAlert(
     IpcRendererNames.IPC_STRING_POOL_APPEND,
     spParams
   );
-  callMainWindowCreate({
+  const result = await callMainWindowCreate({
     bwcOptions: {
       width: 512,
       height: 160,
@@ -47,7 +58,23 @@ export async function callMainWindowCreateTextAlert(
     showWhenReady: true,
     focusWhenReady: true,
     byParent: byParent,
+    whenShowReplyUuid: whenShowReplyUuid,
   });
+  return result;
+}
+
+export async function addOnceCallbackWhenMainCreateTextAlertShowReply(
+  uuid: string,
+  callback: () => void
+) {
+  ipcRendererRaw.once(
+    IpcRendererNames.IPC_ASYNC_EVENT_DONE,
+    (_event, replyUuid) => {
+      if (replyUuid === uuid) {
+        callback();
+      }
+    }
+  );
 }
 
 /**

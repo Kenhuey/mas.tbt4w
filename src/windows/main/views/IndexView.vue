@@ -1,8 +1,24 @@
 <script lang="ts" setup>
-import { callMainWindowCreateTextAlert } from "@/core/ipc/Renderer";
+import {
+  callMainCreateTextAlert,
+  addOnceCallbackWhenMainCreateTextAlertShowReply,
+} from "@/core/ipc/Renderer";
+import { StateQuery } from "@/core/util/StateQuery";
 
-function test() {
-  callMainWindowCreateTextAlert("test test testtesttesttesttest");
+const stateQuery: StateQuery = new StateQuery();
+
+async function test() {
+  if (stateQuery.isQueryDone() === false) {
+    return;
+  }
+  const replyUuid = stateQuery.createState();
+  await callMainCreateTextAlert(
+    "test test testtesttesttesttest ipc加个onShow的回调，因为是异步，给statequery加个event emitter去监听回调",
+    replyUuid
+  );
+  await addOnceCallbackWhenMainCreateTextAlertShowReply(replyUuid, () => {
+    stateQuery.finishState(replyUuid);
+  });
 }
 </script>
 

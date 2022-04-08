@@ -11,6 +11,7 @@ export namespace IpcRendererNames {
   export const IPC_STRING_POOL_APPEND = "ipc-string-pool-append";
   export const IPC_STRING_POOL_REMOVE = "ipc-string-pool-remove";
   export const IPC_STRING_POOL_GET = "ipc-string-pool-get";
+  export const IPC_ASYNC_EVENT_DONE = "ipc-async-event-done:";
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -24,6 +25,7 @@ export namespace IpcRendererParams {
     windowViewPath: string;
     showWhenReady: boolean;
     focusWhenReady: boolean;
+    whenShowReplyUuid: string;
     byParent?: boolean;
   }
 
