@@ -5,6 +5,7 @@ import {
   Menu,
 } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
+import { IpcRendererNames } from "@/core/ipc/Defines";
 
 /**
  * @export
@@ -108,6 +109,12 @@ export class WindowBuilder {
       if (_callback_show !== undefined) {
         _callback_show();
       }
+    });
+    window.on("maximize", () => {
+      window.webContents.send(IpcRendererNames.WINDOW_MAXIMIZE);
+    });
+    window.on("unmaximize", () => {
+      window.webContents.send(IpcRendererNames.WINDOW_NORMALIZE);
     });
     // Return
     return window;

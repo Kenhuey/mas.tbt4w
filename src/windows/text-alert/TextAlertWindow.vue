@@ -10,11 +10,11 @@ import {
 import { IpcRendererNames } from "@/core/ipc/Defines";
 import { RendererProcessIpc } from "electron-better-ipc";
 
+const route = useRoute();
+
 const ipcRenderer: RendererProcessIpc = eval("require")(
   "electron-better-ipc"
 ).ipcRenderer;
-
-const route = useRoute();
 
 const rawQueryUuid = route.query.spuuid?.toString();
 const stringPoolUuid = rawQueryUuid === undefined ? "undefined" : rawQueryUuid;
@@ -40,7 +40,7 @@ function closeWindow() {
       disableMaximize
       disableMinimize
       disableIcon
-      title="Alert"
+      :title="$t('window.title_alert')"
     />
     <div class="text-alert-content-container">
       <div class="text-alert-content">
@@ -48,7 +48,7 @@ function closeWindow() {
       </div>
     </div>
     <div class="text-alert-btn-container">
-      <AlertButton text="OK" @click="closeWindow" />
+      <AlertButton :text="$t('button.ok')" @click="closeWindow" />
     </div>
   </div>
 </template>

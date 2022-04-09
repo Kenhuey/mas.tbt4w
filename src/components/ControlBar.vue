@@ -8,22 +8,22 @@ import {
 import { defineProps, defineEmits, ref } from "vue";
 import { IpcRendererNames } from "@/core/ipc/Defines";
 import { RendererProcessIpc } from "electron-better-ipc";
-import { Remote } from "electron";
+import { IpcRenderer } from "electron";
 
 const ipcRenderer: RendererProcessIpc = eval("require")(
   "electron-better-ipc"
 ).ipcRenderer;
-const remote: Remote =
-  eval("require")("electron").remote; /* Not recommend to use */
+
+const ipcRendererRaw: IpcRenderer = eval("require")("electron").ipcRenderer;
 
 const isMaxmize = ref(false);
 
-remote.getCurrentWindow().on("unmaximize", () => {
-  isMaxmize.value = false;
+ipcRendererRaw.on(IpcRendererNames.WINDOW_MAXIMIZE, () => {
+  isMaxmize.value = true;
 });
 
-remote.getCurrentWindow().on("maximize", () => {
-  isMaxmize.value = true;
+ipcRendererRaw.on(IpcRendererNames.WINDOW_NORMALIZE, () => {
+  isMaxmize.value = false;
 });
 
 const props = defineProps({

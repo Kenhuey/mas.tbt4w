@@ -13,7 +13,7 @@ async function test() {
   }
   const replyUuid = stateQuery.createState();
   await callMainCreateTextAlert(
-    "test test testtesttesttesttest ipc加个onShow的回调，因为是异步，给statequery加个event emitter去监听回调",
+    "todo: 给statequery加个event emitter去监听回调",
     replyUuid
   );
   await addOnceCallbackWhenMainCreateTextAlertShowReply(replyUuid, () => {

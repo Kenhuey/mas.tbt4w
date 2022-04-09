@@ -1,21 +1,5 @@
 <script lang="ts" setup>
 import ControlBar from "@/components/ControlBar.vue";
-import { IpcRendererNames } from "@/core/ipc/Defines";
-
-const { ipcRenderer } = eval("require")("electron-better-ipc");
-const Electron = eval("require")("electron");
-const remote = Electron.remote; /* Not recommend to use */
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-remote.getCurrentWindow().on("close", (event: any) => {
-  beforeCloseMainWindow();
-  event.preventDefault();
-});
-
-function beforeCloseMainWindow(): void {
-  // ipcRenderer.callMain(IpcRendererNames.WINDOW_HIDE);
-  ipcRenderer.callMain(IpcRendererNames.WINDOW_CLOSE);
-}
 </script>
 
 <template>
@@ -24,8 +8,8 @@ function beforeCloseMainWindow(): void {
       @minimize="(next) => next()"
       @maximize="(next) => next()"
       @normalize="(next) => next()"
-      @close="beforeCloseMainWindow"
-      title="MainWindow"
+      @close="(next) => next()"
+      :title="$t('window.title_main')"
     />
     <div class="app-content-container">
       <nav>

@@ -63,6 +63,11 @@ export async function callMainCreateTextAlert(
   return result;
 }
 
+/**
+ * @export
+ * @param {string} uuid
+ * @param {() => void} callback
+ */
 export async function addOnceCallbackWhenMainCreateTextAlertShowReply(
   uuid: string,
   callback: () => void
