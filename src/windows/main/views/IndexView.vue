@@ -23,8 +23,23 @@ async function test() {
 </script>
 
 <template>
-  <div>
-    Hello
-    <button @click="test">test</button>
+  <div class="mw-index-container">
+    <div>
+      Hello <br />
+      <input type="text" />
+      <button @click="test">test</button>
+      <!-- Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+          Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+            Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+              Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+                Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+                  Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+                  Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+          Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+            Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+              Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+                Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+                  Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br /> -->
+    </div>
   </div>
 </template>

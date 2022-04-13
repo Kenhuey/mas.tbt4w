@@ -13,9 +13,10 @@ import { IpcRendererNames } from "@/core/ipc/Defines";
  */
 export class WindowBuilder {
   /**
+   * @static
    * @memberof WindowBuilder
    */
-  public readonly protocolName = "app";
+  public static readonly protocolName = "app";
 
   /**
    * @private
@@ -44,7 +45,7 @@ export class WindowBuilder {
       // Register protocal schmes
       protocol.registerSchemesAsPrivileged([
         {
-          scheme: this.protocolName,
+          scheme: WindowBuilder.protocolName,
           privileges: {
             secure: true,
             standard: true,
@@ -86,12 +87,12 @@ export class WindowBuilder {
       // Create protocol
       if (!WindowBuilder.protocoliInitialized) {
         // Only create once
-        createProtocol(this.protocolName);
+        createProtocol(WindowBuilder.protocolName);
         // Set once call flag
         WindowBuilder.protocoliInitialized = true;
       }
       // Builded mode
-      window.loadURL(`${this.protocolName}://./index.html#/${windowViewPath}`);
+      window.loadURL(`${WindowBuilder.protocolName}://./index.html#/${windowViewPath}`);
     }
     // TODO: Only open in dev/debug mod
     window.webContents.openDevTools({ mode: "detach" });

@@ -38,12 +38,14 @@ app.disableHardwareAcceleration();
 // Electron ready
 app.on("ready", async () => {
   // Create main window
+  const minWidth = 832;
+  const minHeight = 608;
   windowBuilder.generateWindow(
     {
-      width: 1024,
-      minWidth: 1024,
-      height: 768,
-      minHeight: 768,
+      width: minWidth,
+      minWidth: minWidth,
+      height: minHeight,
+      minHeight: minHeight,
       frame: false,
       title:
         "Tieba Tool For Windows" +
@@ -52,6 +54,7 @@ app.on("ready", async () => {
         enableRemoteModule: true,
         nodeIntegration: true,
         contextIsolation: false,
+        // partition: WindowBuilder.protocolName,
       },
     },
     "MainWindow",

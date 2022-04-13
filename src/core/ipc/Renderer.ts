@@ -51,6 +51,7 @@ export async function callMainCreateTextAlert(
         enableRemoteModule: true,
         nodeIntegration: true,
         contextIsolation: false,
+        // partition: WindowBuilder.protocolName,
       },
       modal: true,
     },

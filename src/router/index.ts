@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
+    name: "root",
     component: () => import("../windows/BlankWindow.vue"),
   },
   {
@@ -11,7 +12,13 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "",
+        name: "mw-overview",
         component: () => import("../windows/main/views/IndexView.vue"),
+      },
+      {
+        path: "",
+        name: "mw-setting",
+        component: () => import("../windows/BlankWindow.vue"),
       },
     ],
   },

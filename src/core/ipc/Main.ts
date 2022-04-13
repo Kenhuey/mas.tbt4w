@@ -1,6 +1,5 @@
 import { WindowBuilder } from "@/core/util/Window";
 import { ipcMain } from "electron-better-ipc";
-import { ipcMain as ipcMainRaw } from "electron";
 import { IpcRendererNames, IpcRendererParams } from "./Defines";
 import { StringPool } from "@/core/util/StringPool";
 
