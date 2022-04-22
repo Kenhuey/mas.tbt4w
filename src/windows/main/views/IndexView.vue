@@ -28,7 +28,7 @@ async function test() {
       Hello <br />
       <input type="text" />
       <button @click="test">test</button>
-      <!-- Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
+      Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
           Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
             Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
               Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
@@ -39,7 +39,7 @@ async function test() {
             Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
               Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
                 Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
-                  Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br /> -->
+                  Hello <br />  Hello <br />  Hello <br />  Hello <br />  Hello <br />
     </div>
   </div>
 </template>

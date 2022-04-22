@@ -2,9 +2,12 @@ import { WindowBuilder } from "@/core/util/Window";
 import { app } from "electron";
 import { createIpcs } from "@/core/ipc/Main";
 import { StringPool } from "@/core/util/StringPool";
+import { LoggerFactory } from "@/core/util/LoggerFactory";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare const __static: string; /* Absolute path of main */
+
+const mainLogger: LoggerFactory = new LoggerFactory("main");
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -57,7 +60,7 @@ app.on("ready", async () => {
         // partition: WindowBuilder.protocolName,
       },
     },
-    "MainWindow",
+    "MainWindow/mw-overview",
     true,
     true
   );

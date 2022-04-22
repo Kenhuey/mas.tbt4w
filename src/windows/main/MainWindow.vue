@@ -116,7 +116,7 @@ function routerPushTo(name: string) {
   transition: $common-transition;
 
   &:hover {
-    background-color: #eaeaea;
+    background-color: #e7e7e7;
   }
 }
 

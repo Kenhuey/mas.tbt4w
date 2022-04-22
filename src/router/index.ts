@@ -11,12 +11,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../windows/main/MainWindow.vue"),
     children: [
       {
-        path: "",
+        path: "mw-overview",
         name: "mw-overview",
         component: () => import("../windows/main/views/IndexView.vue"),
       },
       {
-        path: "",
+        path: "mw-setting",
         name: "mw-setting",
         component: () => import("../windows/BlankWindow.vue"),
       },
