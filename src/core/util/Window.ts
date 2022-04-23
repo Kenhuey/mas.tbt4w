@@ -65,6 +65,8 @@ export class WindowBuilder {
    * @param {string} windowViewPath
    * @param {boolean} showWhenReady
    * @param {boolean} focusWhenReady
+   * @param {boolean} debug
+   * @param {() => void} [_callback_show]
    * @return {*}  {BrowserWindow}
    * @memberof WindowBuilder
    */
@@ -73,8 +75,13 @@ export class WindowBuilder {
     windowViewPath: string,
     showWhenReady: boolean,
     focusWhenReady: boolean,
+    debug: boolean,
     _callback_show?: () => void
   ): BrowserWindow {
+    // Prevent "ready-to-show" event not emit
+    if (showWhenReady) {
+      bwcOptions.show = false;
+    }
     // Create window
     const window = new BrowserWindow(bwcOptions);
     // Load web content to window
@@ -92,12 +99,14 @@ export class WindowBuilder {
         WindowBuilder.protocoliInitialized = true;
       }
       // Builded mode
-      window.loadURL(`${WindowBuilder.protocolName}://./index.html#/${windowViewPath}`);
+      window.loadURL(
+        `${WindowBuilder.protocolName}://./index.html#/${windowViewPath}`
+      );
     }
-    // TODO: Only open in dev/debug mod
-    window.webContents.openDevTools({ mode: "detach" });
+    if (debug) {
+      window.webContents.openDevTools({ mode: "detach" });
+    }
     // Prevent blank view when starting
-    window.hide();
     window.on("ready-to-show", () => {
       if (showWhenReady) {
         window.show();
@@ -117,7 +126,8 @@ export class WindowBuilder {
     window.on("unmaximize", () => {
       window.webContents.send(IpcRendererNames.WINDOW_NORMALIZE);
     });
-    // Return
+    // Done
+    console.log(`Create window "${windowViewPath}".`);
     return window;
   }
 }

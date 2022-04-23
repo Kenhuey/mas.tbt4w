@@ -2,8 +2,6 @@ import Log4js from "log4js";
 
 export type Logger = Log4js.Logger;
 
-// TODO: 没写完，记得写，添加多线程之后记得多封装一个轮子方法生成thread-name（或许不用在这里实现，可以直接在多线程TASK封装，反正这东西也就我自己用）
-
 /**
  * Background logger factory(Do not use it in renderer)
  * @export
@@ -13,28 +11,28 @@ export class LoggerFactory {
   /**
    * @private
    * @static
-   * @type {Log4js.Logger}
+   * @type {Logger}
    * @memberof LoggerFactory
    */
-  private static consoleLogger: Log4js.Logger;
+  private static consoleLogger: Logger;
 
   /**
    * @readonly
+   * @private
    * @static
    * @type {Logger}
    * @memberof LoggerFactory
    */
-  private static get ConsoleLogger(): Logger {
-    return LoggerFactory.initialization().consoleLogger;
+  private static get ConsoleLogger(): Logger | undefined {
+    return LoggerFactory.consoleLogger;
   }
 
   /**
-   * @private
    * @static
    * @return {*}  {typeof LoggerFactory}
    * @memberof LoggerFactory
    */
-  private static initialization(): typeof LoggerFactory {
+  public static initialization(debug: boolean): typeof LoggerFactory {
     if (LoggerFactory.consoleLogger !== undefined) {
       return LoggerFactory;
     }
@@ -45,7 +43,7 @@ export class LoggerFactory {
       appenders: {
         file: {
           type: "dateFile",
-          filename: `logs/output`,
+          filename: `logs/${Date.now()}`,
           pattern: "yyyy-MM-dd.log",
           alwaysIncludePattern: true,
           encoding: "utf-8",
@@ -71,7 +69,7 @@ export class LoggerFactory {
       },
     });
     // Replace default console output levels
-    LoggerFactory.consoleLogger = Log4js.getLogger("console");
+    LoggerFactory.consoleLogger = Log4js.getLogger("main");
     console.log = LoggerFactory.consoleLogger.info.bind(
       LoggerFactory.consoleLogger
     );
@@ -87,9 +85,11 @@ export class LoggerFactory {
     console.trace = LoggerFactory.consoleLogger.trace.bind(
       LoggerFactory.consoleLogger
     );
-    console.debug = LoggerFactory.consoleLogger.debug.bind(
-      LoggerFactory.consoleLogger
-    );
+    if (debug) {
+      console.debug = LoggerFactory.consoleLogger.debug.bind(
+        LoggerFactory.consoleLogger
+      );
+    }
     // Done
     return LoggerFactory;
   }
@@ -116,6 +116,9 @@ export class LoggerFactory {
    * @memberof LoggerFactory
    */
   public constructor(loggerName: string) {
+    if (LoggerFactory.ConsoleLogger === undefined) {
+      throw new Error("Logger not ready.");
+    }
     LoggerFactory.ConsoleLogger.info(`Logger "${loggerName}" created.`);
     this.customLogger = Log4js.getLogger(loggerName);
   }

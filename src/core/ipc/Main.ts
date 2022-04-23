@@ -6,10 +6,13 @@ import { StringPool } from "@/core/util/StringPool";
 /**
  * @export
  * @param {WindowBuilder} windowBuilder
+ * @param {StringPool} ipcStringPool
+ * @param {boolean} debug
  */
 export function createIpcs(
   windowBuilder: WindowBuilder,
-  ipcStringPool: StringPool
+  ipcStringPool: StringPool,
+  debug: boolean
 ): void {
   // Close sender's window
   ipcMain.answerRenderer(
@@ -63,6 +66,7 @@ export function createIpcs(
         data.windowViewPath,
         data.showWhenReady,
         data.focusWhenReady,
+        debug,
         () => {
           browserWindow.webContents.send(
             IpcRendererNames.IPC_ASYNC_EVENT_DONE,

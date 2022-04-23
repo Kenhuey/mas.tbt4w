@@ -38,6 +38,9 @@ export class StringPool {
    */
   public update(uuid: string, text: string): void {
     this.pool.set(uuid, text);
+    console.debug(
+      `Added a string "${this.get(uuid)}" with uuid "${uuid}" to pool.`
+    );
   }
 
   /**
@@ -45,7 +48,12 @@ export class StringPool {
    * @memberof StringPool
    */
   public remove(uuid: string): void {
+    // const tempString: string = this.get(uuid);
     this.pool.delete(uuid);
+    // console.debug(
+    //   `Removed a string "${tempString}" with uuid "${uuid}" from pool.`
+    // );
+    console.debug(`Removed a string with uuid "${uuid}" from pool.`);
   }
 
   /**
