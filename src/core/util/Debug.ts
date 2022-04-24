@@ -49,6 +49,7 @@ export function sleep(ms: number): Promise<void> {
       reject();
     }
     setTimeout(() => {
+      console.debug(`Sleep: ${ms}ms.`);
       resolve();
     }, ms);
   });
