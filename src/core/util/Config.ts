@@ -37,9 +37,6 @@ export class ConfigStore {
    * @param {string} name
    * @param {*} schema
    * @param {string} [dir="\\"]
-   * @param {(e: unknown) => void} [_errCallBack=(e) => {
-   *       throw e;
-   *     }]
    * @memberof ConfigStore
    */
   constructor(name: string, schema: any, dir: string = "\\") {

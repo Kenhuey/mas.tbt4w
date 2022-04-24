@@ -1,4 +1,4 @@
-import { Command } from "commander";
+import { Command, Option, OptionValues } from "commander";
 
 /**
  * @export
@@ -18,22 +18,21 @@ export interface ProcessArgs {
  * @param {boolean} [forceDebug=false]
  * @return {*}  {ProcessArgs}
  */
-export function parseProcessArgs(
-  processArgs: string[],
-  forceDebug: boolean = false
-): ProcessArgs {
-  const options: ProcessArgs = new Command()
+export function parseProcessArgs(forceDebug: boolean = false): ProcessArgs {
+  const options = new Command()
     .configureOutput({
       writeOut: (message: string) => console.log(`${message}`),
       writeErr: (message: string) => console.error(`${message}`),
       outputError: (message: string, write) => write(`${message}`),
     })
-    .option("--debug", "", false)
-    .parse(processArgs)
-    .opts();
+    .addOption(new Option("-d, --debug").hideHelp())
+    .parse(); // Do not use process.argv
+  const opts: OptionValues = options.opts();
   // Force debug mode
-  options.debug = forceDebug;
-  return options;
+  if (forceDebug) {
+    opts.debug = true;
+  }
+  return opts as ProcessArgs;
 }
 
 /**

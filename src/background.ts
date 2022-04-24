@@ -22,11 +22,11 @@ function quit(): void {
 }
 
 /**
- * @param {string[]} args
+ * @param {string[]} rawArgs
  */
-async function main(args: string[]): Promise<void> {
+async function main(): Promise<void> {
   // Options
-  const options: ProcessArgs = parseProcessArgs(args, isDevelopment);
+  const options: ProcessArgs = parseProcessArgs(isDevelopment);
   // Logger
   LoggerFactory.initialization(options.debug);
   // Log basic infos
@@ -120,4 +120,4 @@ async function main(args: string[]): Promise<void> {
 }
 
 // Run
-main(process.argv);
+main();
